@@ -5,6 +5,7 @@ import hongxeob.restapi_crud.Post;
 import hongxeob.restapi_crud.repository.PostRepository;
 import hongxeob.restapi_crud.request.UpdatePostDto;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -33,6 +34,7 @@ class PostControllerTest {
     }
 
     @Test
+    @DisplayName("게시물_저장")
     void create() throws Exception {
         Post post = Post.builder()
                 .title("제목")
@@ -47,21 +49,7 @@ class PostControllerTest {
     }
 
     @Test
-    void findAll() throws Exception {
-        //given
-        for (int i = 1; i <= 5; i++) {
-            postRepository.save(Post.builder()
-                    .title("제목" + i)
-                    .content("내용" + i)
-                    .build());
-        }
-        //when
-        mockMvc.perform(get("/posts")
-                        .contentType(APPLICATION_JSON))
-                .andExpect(status().isOk()).andDo(print());
-    }
-
-    @Test
+    @DisplayName("게시물_단건_조회")
     void findOne() throws Exception {
         //given
         Post post = Post.builder()
@@ -79,6 +67,23 @@ class PostControllerTest {
     }
 
     @Test
+    @DisplayName("게시물_전체_조회")
+    void findAll() throws Exception {
+        //given
+        for (int i = 1; i <= 5; i++) {
+            postRepository.save(Post.builder()
+                    .title("제목" + i)
+                    .content("내용" + i)
+                    .build());
+        }
+        //when
+        mockMvc.perform(get("/posts")
+                        .contentType(APPLICATION_JSON))
+                .andExpect(status().isOk()).andDo(print());
+    }
+
+    @Test
+    @DisplayName("게시물_수정")
     void update() throws Exception {
         //given
         Post post = Post.builder()
@@ -94,6 +99,7 @@ class PostControllerTest {
     }
 
     @Test
+    @DisplayName("게시물_삭제")
     void deleteTest() throws Exception {
         Post post = Post.builder()
                 .title("제목")

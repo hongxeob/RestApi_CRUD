@@ -2,12 +2,11 @@ package hongxeob.restapi_crud.controller;
 
 import hongxeob.restapi_crud.request.CreatePostDto;
 import hongxeob.restapi_crud.request.UpdatePostDto;
+import hongxeob.restapi_crud.response.PostListResponse;
 import hongxeob.restapi_crud.response.PostResponse;
 import hongxeob.restapi_crud.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -20,7 +19,7 @@ public class PostController {
     }
 
     @GetMapping("/posts")
-    public List<PostResponse> findAll() {
+    public PostListResponse findAll() {
         return postService.findAll();
     }
 

@@ -5,6 +5,7 @@ import hongxeob.restapi_crud.repository.PostRepository;
 import hongxeob.restapi_crud.request.CreatePostDto;
 import hongxeob.restapi_crud.request.PostConvert;
 import hongxeob.restapi_crud.request.UpdatePostDto;
+import hongxeob.restapi_crud.response.PostListResponse;
 import hongxeob.restapi_crud.response.PostResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -41,10 +42,16 @@ public class PostService {
         return response;
     }
 
+    //    //전체 게시글
+//    @Transactional(readOnly = true)
+//    public List<PostResponse> findAll() {
+//        return postRepository.findAll().stream().map(post -> new PostResponse(post)).collect(Collectors.toList());
+//    }
     //전체 게시글
     @Transactional(readOnly = true)
-    public List<PostResponse> findAll() {
-        return postRepository.findAll().stream().map(post -> new PostResponse(post)).collect(Collectors.toList());
+    public PostListResponse findAll() {
+        List<PostResponse> postResponses = postRepository.findAll().stream().map(PostResponse::new).collect(Collectors.toList());
+        return PostListResponse.builder().postList(postResponses).build();
     }
 
     @Transactional
@@ -58,7 +65,9 @@ public class PostService {
 
     @Transactional
     public void delete(Long id) {
-        Post post = postRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 하는 게시물이 없습니다 id= " + id));
+        Post post = postRepository.findById(id).orElseThrow(
+                () -> new IllegalArgumentException("게시글을 찾을 수 없습니다. id = " + id));
+
         postRepository.deleteById(post.getId());
     }
 }

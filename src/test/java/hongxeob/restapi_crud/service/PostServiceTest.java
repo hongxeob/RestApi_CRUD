@@ -4,6 +4,7 @@ import hongxeob.restapi_crud.Post;
 import hongxeob.restapi_crud.repository.PostRepository;
 import hongxeob.restapi_crud.request.CreatePostDto;
 import hongxeob.restapi_crud.request.UpdatePostDto;
+import hongxeob.restapi_crud.response.PostListResponse;
 import hongxeob.restapi_crud.response.PostResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -56,13 +57,13 @@ class PostServiceTest {
         Post post2 = Post.builder().title("제목2").content("내용2").build();
         postRepository.save(post2);
         //when
-        List<PostResponse> findAll = postService.findAll();
+        PostListResponse findAll = postService.findAll();
         //then
-        assertThat(findAll.size()).isEqualTo(2);
-        assertThat(findAll.get(0).getTitle()).isEqualTo("제목1");
-        assertThat(findAll.get(0).getContent()).isEqualTo("내용1");
-        assertThat(findAll.get(1).getTitle()).isEqualTo("제목2");
-        assertThat(findAll.get(1).getContent()).isEqualTo("내용2");
+        assertThat(findAll.getPostList().size()).isEqualTo(2);
+        assertThat(findAll.getPostList().get(0).getTitle()).isEqualTo("제목1");
+        assertThat(findAll.getPostList().get(0).getContent()).isEqualTo("내용1");
+        assertThat(findAll.getPostList().get(1).getTitle()).isEqualTo("제목2");
+        assertThat(findAll.getPostList().get(1).getContent()).isEqualTo("내용2");
     }
 
     @Test
